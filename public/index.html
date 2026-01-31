@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RouteFinder - Pathfinding Visualizer</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/controls.css" />
+    <link rel="stylesheet" href="css/grid.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>RouteFinder</h1>
+        <p class="subtitle">Visualize and compare pathfinding algorithms</p>
+      </header>
+      <main>
+        <section class="controls-panel">
+          <div class="control-group">
+            <label for="algorithms">Algorithm: </label>
+            <select id="algorithms">
+              <option value="">Select an algorithm</option>
+              <optgroup label="Weighted">
+                <option value="dijkstra">Dijkstra's Algorithm</option>
+                <option value="astar">A* Search</option>
+                <option value="greedy">Greedy Best-first Search</option>
+                <option value="swarm">Swarm Algorithm</option>
+                <option value="convergent">Convergent Swarm</option>
+                <option value="bidirectional">Bidirectional Swarm</option>
+              </optgroup>
+              <optgroup label="Unweighted">
+                <option value="bfs">Breadth-first Search</option>
+                <option value="dfs">Depth-first Search</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="control-group">
+            <button id="visualize" class="btn btn-primary">Visualize</button>
+            <button id="clear-path" class="btn btn-secondary">Clear Path</button>
+            <button id="clear-walls" class="btn btn-secondary">Clear Walls</button>
+            <button id="clear-board" class="btn btn-secondary">Clear Board</button>
+          </div>
+          <div class="control-group">
+            <label>Generate Maze:</label>
+            <button id="recursive-division" class="btn btn-maze">Recursive Division</button>
+          </div>
+          <div class="control-group">
+            <label for="speed-slider">Speed:</label>
+            <input type="range" id="speed-slider" min="1" max="100" value="50" />
+            <span id="speed-value">Medium</span>
+          </div>
+        </section>
+
+        <!-- Grid Container -->
+        <section class="grid-container">
+          <div id="grid"></div>
+        </section>
+
+        <!-- Legend -->
+        <section class="legend">
+          <div class="legend-item">
+            <div class="legend-box start-node"></div>
+            <span>Start Node</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box end-node"></div>
+            <span>End Node</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box wall-node"></div>
+            <span>Wall Node</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box visited-node"></div>
+            <span>Visited Node</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box path-node"></div>
+            <span>Shortest Path</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box weighted-node"></div>
+            <span>Weighted Node</span>
+          </div>
+        </section>
+
+        <section class="stats-panel">
+          <h3>Statistics</h3>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-label">Algorithm:</span>
+              <span id="stat-algorithm">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Nodes Visited:</span>
+              <span id="stat-visited">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Path Length:</span>
+              <span id="stat-path-length">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Execution Time:</span>
+              <span id="stat-time">-</span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p>
+          Built with vanilla JavaScript |
+          <a href="https://github.com/itsAasmaan/RouteFinder.git" target="_blank">View on GitHub</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
