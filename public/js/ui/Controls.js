@@ -1,4 +1,5 @@
 import { bfs } from "../algorithms/bfs.js";
+import { dfs } from "../algorithms/dfs.js";
 import { Visualizer } from "../core/Visualizer.js";
 import { StatsDisplay } from "./StatsDisplay.js";
 
@@ -93,6 +94,8 @@ export class Controls {
           result = bfs(this.grid, this.grid.startNode, this.grid.endNode);
           break;
         case "dfs":
+          result = dfs(this.grid, this.grid.startNode, this.grid.endNode);
+          break;
         case "dijkstra":
         case "astar":
         case "greedy":
