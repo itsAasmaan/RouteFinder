@@ -98,6 +98,19 @@
     box-shadow: 0 0 10px rgba(255, 208, 155, 0.5);
 }
 
+.node-weighted::after {
+    content: '\1f48e';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #1a202c;
+    text-shadow: none;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: -1px;
+}
+
 .node:hover:not(.node-start):not(.node-end):not(.node-wall) {
     background-color: #e2e8f0;
     transform: scale(1.05);

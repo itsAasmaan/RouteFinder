@@ -1,5 +1,6 @@
 import { bfs } from "../algorithms/bfs.js";
 import { dfs } from "../algorithms/dfs.js";
+import { dijkstra } from "../algorithms/dijkstra.js";
 import { Visualizer } from "../core/Visualizer.js";
 import { StatsDisplay } from "./StatsDisplay.js";
 
@@ -19,6 +20,7 @@ export class Controls {
     this.recursiveDivisionBtn = document.getElementById("recursive-division");
     this.speedSlider = document.getElementById("speed-slider");
     this.speedValue = document.getElementById("speed-value");
+    this.weightModeBtn = document.getElementById("weight-mode");
 
     this.setupEventListeners();
     this.updateSpeedLabel();
@@ -63,6 +65,13 @@ export class Controls {
     this.speedSlider.addEventListener("input", () => {
       this.updateSpeedLabel();
     });
+
+    // Weight mode button (if exists)
+    if (this.weightModeBtn) {
+      this.weightModeBtn.addEventListener("click", () => {
+        this.toggleWeightMode();
+      });
+    }
   }
 
   /**
@@ -97,6 +106,8 @@ export class Controls {
           result = dfs(this.grid, this.grid.startNode, this.grid.endNode);
           break;
         case "dijkstra":
+          result = dijkstra(this.grid, this.grid.startNode, this.grid.endNode);
+          break;
         case "astar":
         case "greedy":
         case "swarm":
@@ -199,5 +210,22 @@ export class Controls {
    */
   getSelectedAlgorithm() {
     return this.algorithmSelect.value;
+  }
+
+  /**
+   * Toggle between wall and weight drawing mode
+   */
+  toggleWeightMode() {
+    const currentMode = this.mouseHandler.getDrawMode();
+
+    if (currentMode === "wall") {
+      this.mouseHandler.setDrawMode("weight");
+      this.weightModeBtn.textContent = "Draw Walls";
+      this.weightModeBtn.classList.add("active");
+    } else {
+      this.mouseHandler.setDrawMode("wall");
+      this.weightModeBtn.textContent = "Add Weights";
+      this.weightModeBtn.classList.remove("active");
+    }
   }
 }

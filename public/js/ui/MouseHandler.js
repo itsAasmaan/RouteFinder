@@ -8,6 +8,9 @@ export class MouseHandler {
     this.isDraggingEnd = false;
     this.isDrawingWalls = false;
     this.isErasingWalls = false;
+    this.isAddingWeights = false;
+
+    this.drawMode = "wall";
 
     this.setupEventListeners();
   }
@@ -40,12 +43,17 @@ export class MouseHandler {
     } else if (node.isEnd) {
       this.isDraggingEnd = true;
     } else {
-      if (node.isWall) {
-        this.isErasingWalls = true;
-        this.grid.removeWall(row, col);
+      if (this.drawMode === "weight") {
+        this.isAddingWeights = true;
+        this.grid.setWeight(row, col, 5);
       } else {
-        this.isDrawingWalls = true;
-        this.grid.addWall(row, col);
+        if (node.isWall) {
+          this.isErasingWalls = true;
+          this.grid.removeWall(row, col);
+        } else {
+          this.isDrawingWalls = true;
+          this.grid.addWall(row, col);
+        }
       }
     }
   }
@@ -69,6 +77,8 @@ export class MouseHandler {
       this.grid.addWall(row, col);
     } else if (this.isErasingWalls) {
       this.grid.removeWall(row, col);
+    } else if (this.isAddingWeights) {
+      this.grid.setWeight(row, col, 5);
     }
   }
 
@@ -81,6 +91,21 @@ export class MouseHandler {
     this.isDraggingEnd = false;
     this.isDrawingWalls = false;
     this.isErasingWalls = false;
+    this.isAddingWeights = false;
+  }
+
+  /**
+   * Set the drawing mode (wall or weight)
+   */
+  setDrawMode(mode) {
+    this.drawMode = mode; // 'wall' or 'weight'
+  }
+
+  /**
+   * Get current draw mode
+   */
+  getDrawMode() {
+    return this.drawMode;
   }
 
   /**
