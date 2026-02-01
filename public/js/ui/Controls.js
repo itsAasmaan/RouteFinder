@@ -1,7 +1,13 @@
+import { bfs } from "../algorithms/bfs.js";
+import { Visualizer } from "../core/Visualizer.js";
+import { StatsDisplay } from "./StatsDisplay.js";
+
 export class Controls {
   constructor(grid, mouseHandler) {
     this.grid = grid;
     this.mouseHandler = mouseHandler;
+    this.visualizer = new Visualizer(grid);
+    this.statsDisplay = new StatsDisplay();
     this.isVisualizing = false;
 
     this.algorithmSelect = document.getElementById("algorithms");
@@ -29,6 +35,7 @@ export class Controls {
     // Clear path button
     this.clearPathBtn.addEventListener("click", () => {
       this.grid.clearPath();
+      this.visualizer.clearVisualization();
       this.enableControls();
     });
 
@@ -41,6 +48,8 @@ export class Controls {
     // Clear board button
     this.clearBoardBtn.addEventListener("click", () => {
       this.grid.clearBoard();
+      this.visualizer.clearVisualization();
+      this.statsDisplay.reset();
       this.enableControls();
     });
 
@@ -58,7 +67,7 @@ export class Controls {
   /**
    * Handle visualize button click
    */
-  handleVisualize() {
+  async handleVisualize() {
     const algorithm = this.algorithmSelect.value;
 
     if (!algorithm) {
@@ -71,7 +80,60 @@ export class Controls {
       return;
     }
 
-    alert(`${algorithm} visualization will be implemented in the next commit!`);
+    this.grid.clearPath();
+    this.visualizer.clearVisualization();
+    this.disableControls();
+
+    const startTime = performance.now();
+    let result;
+
+    try {
+      switch (algorithm) {
+        case "bfs":
+          result = bfs(this.grid, this.grid.startNode, this.grid.endNode);
+          break;
+        case "dfs":
+        case "dijkstra":
+        case "astar":
+        case "greedy":
+        case "swarm":
+        case "convergent":
+        case "bidirectional":
+          alert(`${algorithm} will be implemented in the later!`);
+          this.enableControls();
+          return;
+        default:
+          throw new Error("Unknown algorithm");
+      }
+    } catch (error) {
+      console.error("Algorithm error:", error);
+      alert("An error occurred while running the algorithm!");
+      this.enableControls();
+      return;
+    }
+
+    const endTime = performance.now();
+    const executionTime = endTime - startTime;
+
+    this.statsDisplay.update({
+      algorithm: algorithm,
+      nodesVisited: result.visitedNodesInOrder.length,
+      pathLength: result.path.length,
+      executionTime: executionTime,
+      success: result.success,
+    });
+
+    const speed = this.getSpeed();
+    this.visualizer.setSpeed(speed);
+
+    await this.visualizer.visualize(result.visitedNodesInOrder, result.path, () => {
+      this.enableControls();
+      if (!result.success) {
+        setTimeout(() => {
+          alert("No path found! The end node is unreachable.");
+        }, 100);
+      }
+    });
   }
 
   /**
