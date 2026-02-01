@@ -15,7 +15,7 @@ class RouteFinder {
    * Initialize the application
    */
   init() {
-    this.grid = new Grid(20, 50);
+    this.grid = new Grid(25, 50);
     const gridContainer = document.getElementById("grid");
     this.grid.render(gridContainer);
 
