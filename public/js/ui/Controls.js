@@ -1,6 +1,7 @@
 import { bfs } from "../algorithms/bfs.js";
 import { dfs } from "../algorithms/dfs.js";
 import { dijkstra } from "../algorithms/dijkstra.js";
+import { astar } from "../algorithms/astart.js";
 import { Visualizer } from "../core/Visualizer.js";
 import { StatsDisplay } from "./StatsDisplay.js";
 
@@ -109,6 +110,8 @@ export class Controls {
           result = dijkstra(this.grid, this.grid.startNode, this.grid.endNode);
           break;
         case "astar":
+          result = astar(this.grid, this.grid.startNode, this.grid.endNode);
+          break;
         case "greedy":
         case "swarm":
         case "convergent":

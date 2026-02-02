@@ -48,6 +48,9 @@ export class Node {
 
     // Clear all state classes
     this.element.className = "node";
+    if (this.weight > 1 && !this.isWall && !this.isStart && !this.isEnd) {
+      this.element.classList.add("node-weighted");
+    }
 
     // Add current state classes
     if (this.isStart) this.element.classList.add("node-start");
